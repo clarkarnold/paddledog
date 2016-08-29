@@ -1,3 +1,6 @@
+
+       
+
 <nav class="navbar navbar-transparent navbar-absolute">
     	<div class="container">
         	<!-- Brand and toggle get grouped for better mobile display -->
@@ -8,7 +11,10 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
         		</button>
-        		<a class="navbar-brand" href="index.php">PD</a>
+        		<a class="navbar-brand" href="index.php">
+        		    <i class="fa fa-anchor"></i>
+        		    PaddleDog
+        		</a>
         	</div>
 
         	<div class="collapse navbar-collapse" id="navigation-example">
@@ -39,8 +45,18 @@
 		                <a href="#" target="_blank" class="btn btn-simple btn-white btn-just-icon">
 							<i class="fa fa-instagram"></i>
 						</a>
+                
 		            </li>
+		            <?php
+                        if(isset($_SESSION['user_name'])!==""){
+                            echo "<li><a href='logout.php?logout'  class=''>
+                            Logout
+						</a></li>";
+                        }
+                    
+                    ?>
         		</ul>
         	</div>
     	</div>
     </nav>
+<div class="wrapper">
