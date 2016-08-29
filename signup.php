@@ -62,18 +62,19 @@
        }
 
        // encrypt password
-       $user_password = password_hash($user_password, PASSWORD_DEFAULT);
+       $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
        if(!$error){
 
        $query = "INSERT INTO users(user_name, user_email, user_password) ";
 
-       $query .= "VALUES('{$user_name}', '{$user_email}', '{$user_password}')";
+       $query .= "VALUES('{$user_name}', '{$user_email}', '{$hashed_password}')";
 
        $create_user_query = mysqli_query($connection, $query);
        confirm($create_user_query);
         if($create_user_query){
             $_SESSION['user_name'] = $user_name;
+            $_SESSION['user_email'] = $user_email;
             header("Location: profile.php");
         }
        
@@ -86,7 +87,7 @@
 					<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
 						<div class="card card-signup">
 							<form class="form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-								<div class="header header-info text-center">
+								<div class="header header-primary text-center">
 									<h4>Sign Up</h4>
 
 								</div>
@@ -130,13 +131,15 @@
 									</div> -->
 								</div>
 								<div class="footer text-center">
-								    <div>
-                                        <input name="create_user" type="submit" class="btn btn-success" value="Get Started"/>
-                                        
-									<a href="" class="btn btn-simple btn-info btn-lg">
-									<i class="fa fa-sign-in"></i> 
-									 Sign In</a>
-								</div>
+								    <div class="row">
+                                        <button class="btn btn-primary btn-large" type="submit" name="create_user">
+                                            <i class="material-icons">person_add</i>
+                                            Sign Up
+                                        </button>
+                                    </div>
+                                    <div class="row">
+                                        <small>Already have an account?</small><a href="signin.php" class="btn btn-simple btn-info btn-small">Sign In</a>
+                                    </div>
 							</form>
 						</div>
 					</div>

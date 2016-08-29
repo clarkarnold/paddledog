@@ -48,7 +48,7 @@
                 
 		            </li>
 		            <?php
-                        if(isset($_SESSION['user_name'])!==""){
+                        if(isset($_SESSION['user_name'])){
                             echo "<li><a href='logout.php?logout'  class=''>
                             Logout
 						</a></li>";

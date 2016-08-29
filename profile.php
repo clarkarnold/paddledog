@@ -1,16 +1,16 @@
 <?php include "includes/header.php"; ?>
 <?php
 
-if(!isset($_SESSION['user_name'])){
-    header("Location: signup.php");
-} else {
+//if(!isset($_SESSION['user_name'])){
+//    header("Location: signup.php");
+//} else {
     $name = $_SESSION['user_name'];
     $email = $_SESSION['user_email'];
     
     $query = "SELECT * FROM users WHERE user_name = '{$name}'";
     $access_profile = mysqli_query($connection, $query);
     confirm($access_profile);
-}
+
 
 
 
@@ -31,6 +31,7 @@ if(!isset($_SESSION['user_name'])){
 	                        </div>
 	                        <div class="name">
 	                            <h3 class="title"><?php echo $name; ?></h3>
+	                            <h4><?php echo $email; ?></h4>
 								<a href="add_paddle.php" class="btn btn-primary btn-large">Add Paddle</a>
 	                        </div>
 	                    </div>

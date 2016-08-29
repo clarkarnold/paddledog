@@ -17,6 +17,9 @@
 	                    <a href="signup.php" class="btn btn-danger btn-raised btn-lg">
 							 Sign Up
 						</a>
+						<a href="signin.php" class="btn btn-info btn-raised btn-lg">
+							 Sign In
+						</a>
 					</div>
                 </div>
             </div>
