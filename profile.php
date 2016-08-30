@@ -5,11 +5,20 @@
 //    header("Location: signup.php");
 //} else {
     $name = $_SESSION['user_name'];
-    $email = $_SESSION['user_email'];
+
     
     $query = "SELECT * FROM users WHERE user_name = '{$name}'";
     $access_profile = mysqli_query($connection, $query);
     confirm($access_profile);
+
+while($row = mysqli_fetch_assoc($access_profile)){
+    $user_email = $row['user_email'];
+    $user_id = $row['user_id'];
+}
+
+$query = "SELECT * FROM paddles WHERE paddle_user = {$user_id}";
+$get_paddle_query = mysqli_query($connection,$query);
+confirm($get_paddle_query);
 
 
 
@@ -31,8 +40,8 @@
 	                        </div>
 	                        <div class="name">
 	                            <h3 class="title"><?php echo $name; ?></h3>
-	                            <h4><?php echo $email; ?></h4>
-								<a href="add_paddle.php" class="btn btn-primary btn-large">Add Paddle</a>
+	                            <h4><?php echo $user_email; ?></h4>
+								<a href="add_paddle.php?u_id=<?php echo $user_id; ?>" class="btn btn-primary btn-large">Add Paddle</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -52,12 +61,15 @@
                                      </tr>
 							    </thead>
 							    <tbody>
+                                   <?php
+                                    
                                     <tr>
                                         <td>6.1.16</td>
                                         <td>First Landing</td>
                                         <td>4.3 mi</td>
                                         <td>96 min</td>
                                     </tr>
+                                        ?>
 							    </tbody>
 							</table>
 							<!-- End Profile Tabs -->

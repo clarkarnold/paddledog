@@ -1,6 +1,29 @@
 <?php include "includes/header.php"; ?>
 <body class="index-page">
 <?php include "includes/navigation.php"; ?>
+<?php
+    if(isset($_GET['u_id'])){
+        $user_id = $_GET['u_id'];
+    }
+    
+    if(isset($_POST['add_paddle'])){
+        $paddle_date     = $_POST['paddle_date'];
+        $paddle_location = $_POST['paddle_location'];
+        $paddle_distance = $_POST['paddle_distance'];
+        $paddle_duration = $_POST['paddle_duration'];
+        
+        
+        $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user) ";
+        $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', {$user_id})";
+        
+        $add_paddle_query = mysqli_query($connection, $query);
+        confirm($add_paddle_query);
+        
+        
+    }
+    
+    
+    ?>
 <div class="wrapper">
     <div class="header " style="background-image: url('https://hd.unsplash.com/photo-1466840787022-48e0ec048c8a');">
 		<div class="container">
@@ -21,18 +44,18 @@
 	    	    <div class="row">
                 <h3 class="text-center">Enter Information</h3>
 	    	        <div class="col-md-6 col-md-offset-3">
-	    	            <form action="">
+	    	            <form action="" method="post">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="">Date</label>
-                                        <input class="datepicker form-control" type="text" value="<?php echo date("m/d/Y"); ?>"/>
+                                        <input name="paddle_date" class="datepicker form-control" type="text" value="<?php echo date("m/d/Y"); ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="">Location</label>
-                                        <input type="text" value="" placeholder="Rudee's" class="form-control" />
+                                        <input name="paddle_location" type="text" value="" placeholder="Rudee's" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -40,20 +63,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="">Distance <small>(miles)</small></label>
-                                        <input type="number" value="" placeholder="4.2" class="form-control" />
+                                        <input name="paddle_distance" type="number" step="any" value="" placeholder="4.2" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="">Duration <small>(minutes)</small></label>
-                                        <input type="number" value="" placeholder="112" class="form-control" />
+                                        <input name="paddle_duration" type="number" value="" placeholder="112" class="form-control" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                       <input name="" class="btn btn-info" type="submit" value="Submit">
+                                       <input name="add_paddle" class="btn btn-info" type="submit" value="Submit">
                                         <input class="btn btn-danger btn-simple" type="reset" value="Reset">
                                     </div>
                                 </div>
