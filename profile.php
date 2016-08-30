@@ -21,8 +21,14 @@ $get_paddle_query = mysqli_query($connection,$query);
 confirm($get_paddle_query);
 
 
-
-
+$total_distance = 0;
+$total_duration = 0;
+$total_paddles = 0;
+while($row = mysqli_fetch_assoc($get_paddle_query)){
+    $total_paddles++ ;
+    $total_distance += $row['paddle_distance'];
+    $total_duration += $row['paddle_duration'];
+}
 
 ?>
 <body class="profile-page">
@@ -39,8 +45,8 @@ confirm($get_paddle_query);
 	                            <img src="http://demos.creative-tim.com/material-kit/assets/img/christian.jpg" alt="Circle Image" class="img-circle img-responsive img-raised">
 	                        </div>
 	                        <div class="name">
-	                            <h3 class="title"><?php echo $name; ?></h3>
-	                            <h4><?php echo $user_email; ?></h4>
+	                            <h3 class="title">Welcome <?php echo $name; ?></h3>
+	                            
 								<a href="add_paddle.php?u_id=<?php echo $user_id; ?>" class="btn btn-primary btn-large">Add Paddle</a>
 	                        </div>
 	                    </div>
@@ -54,27 +60,28 @@ confirm($get_paddle_query);
                             <table class="table">
 							    <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Location</th>
+                                        
+                                        <th>Outings</th>
                                         <th>Distance</th>
                                         <th>Duration</th>
                                      </tr>
 							    </thead>
 							    <tbody>
-                                   <?php
+                                   <!--Add loop here-->
                                     
                                     <tr>
-                                        <td>6.1.16</td>
-                                        <td>First Landing</td>
-                                        <td>4.3 mi</td>
-                                        <td>96 min</td>
+                                        
+                                        <td><?php echo $total_paddles; ?></td>
+                                        <td><?php echo $total_distance; ?> miles</td>
+                                        <td><?php echo $total_duration; ?> minutes</td>
                                     </tr>
-                                        ?>
+                                        
 							    </tbody>
 							</table>
 							<!-- End Profile Tabs -->
 						</div>
 	                </div>
+
 	                <div class="row">
 	                    <div class="col-md-6 col-md-offset-3">
                             <h3>Recent Paddles</h3>
@@ -88,39 +95,47 @@ confirm($get_paddle_query);
 							        <th>Duration</th>
 							         <th class="td-actions text-right">Actions</th>
 							         </tr>
+							         
 							    </thead>
 							    <tbody>
-                                    <tr>
-                                       <td><img src="http://www.nextrollout.com/wp-content/uploads/2014/11/Cool-Whatsapp-DP.jpg" alt="" class="img-rounded img-raised" height="50px"></td>
-                                        <td>6.1.16</td>
-                                        <td>First Landing</td>
-                                        <td>4.3 mi</td>
-                                        <td>96 min</td>
-                                        <td class="text-right">
-                                            <button type="button" rel="tooltip" title="Edit Entry" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Delete Entry" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                       <td><img src="http://www.nextrollout.com/wp-content/uploads/2014/11/Cool-Whatsapp-DP.jpg" alt="" class="" height="50px"></td>
-                                        <td>6.1.16</td>
-                                        <td>First Landing</td>
-                                        <td>4.3 mi</td>
-                                        <td>96 min</td>
-                                        <td class="text-right">
-                                            <button type="button" rel="tooltip" title="Edit Entry" class="btn btn-info btn-simple btn-xs">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Delete Entry" class="btn btn-danger btn-simple btn-xs">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                
+                                   
+                                   <?php
+      
+                                  $query = "SELECT * FROM paddles WHERE paddle_user = {$user_id}";
+                                  $get_all_paddles = mysqli_query($connection,$query);
+                                  confirm($get_all_paddles);
+                                    
+                                    while($row = mysqli_fetch_assoc($get_all_paddles)){
+                                        $paddle_id       = $row['paddle_id'];
+                                        $paddle_date     = date("m-d-Y", strtotime($row['paddle_date']));
+                                        $paddle_location = $row['paddle_location'];
+                                        $paddle_distance = $row['paddle_distance'];
+                                        $paddle_duration = $row['paddle_duration'];
+                                        $paddle_image    = $row['paddle_image'];
+                                        
+                                        if(empty($paddle_image)){
+                                            $paddle_image = "user_default.jpg";
+                                        }
+                                        
+                                    
+                                    echo "<tr>";
+                                    echo "<td><img src='images/$paddle_image'' alt='' class='img-rounded img-raised' height='50px'></td>";
+                                    echo "<td>$paddle_date</td>";
+                                    echo "<td>$paddle_location</td>";
+                                    echo "<td>$paddle_distance mi</td>";
+                                    echo "<td>$paddle_duration min</td>";
+                                    echo  "<td class='text-right'>
+                                            <a href='edit_paddle.php?p_id={$paddle_id}' class='btn btn-info btn-simple btn-xs'>
+							                     <i class='fa fa-edit'></i>
+							                 </a>
+                                            <a rel='tooltip' title='Delete Entry' href='profile.php?delete={$paddle_id}' class='btn btn-danger btn-simple btn-xs'><i class='fa fa-times'></i></a>
+                                        </td>";
+                                    echo "</tr>";
+                                     } // end while ?> 
+
 							    </tbody>
+							    
 							</table>
 	                    </div>
 	                </div>
@@ -129,8 +144,17 @@ confirm($get_paddle_query);
 	        </div>
 		</div>
 
+<script>
+  
+</script>
+<?php
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $query = "DELETE FROM paddles WHERE paddle_id = {$id}";
+    $delete_paddle = mysqli_query($connection,$query);
+    confirm($delete_paddle);
+    header("Location: profile.php");
+}
 
-
-
-
+?>
 <?php include "includes/footer.php"; ?>

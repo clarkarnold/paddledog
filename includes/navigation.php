@@ -49,7 +49,10 @@
 		            </li>
 		            <?php
                         if(isset($_SESSION['user_name'])){
-                            echo "<li><a href='logout.php?logout'  class=''>
+                            echo "
+                            <li><a href='profile.php'>Profile</a>
+                            </li>
+                            <li><a href='logout.php?logout'  class=''>
                             Logout
 						</a></li>";
                         }
