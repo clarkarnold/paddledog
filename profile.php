@@ -6,14 +6,14 @@
 //} else {
     $name = $_SESSION['user_name'];
 
+    $access_profile = select_users($name);
+
     
-    $query = "SELECT * FROM users WHERE user_name = '{$name}'";
-    $access_profile = mysqli_query($connection, $query);
-    confirm($access_profile);
 
 while($row = mysqli_fetch_assoc($access_profile)){
     $user_email = $row['user_email'];
-    $user_id = $row['user_id'];
+    $user_id    = $row['user_id'];
+    $user_image = $row['user_image'];
 }
 
 $query = "SELECT * FROM paddles WHERE paddle_user = {$user_id}";
@@ -42,12 +42,13 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 	                <div class="row">
 	                    <div class="profile">
 	                        <div class="avatar">
-	                            <img src="http://demos.creative-tim.com/material-kit/assets/img/christian.jpg" alt="Circle Image" class="img-circle img-responsive img-raised">
+	                            <img src="images/<?php echo $user_image; ?>" alt="Circle Image" class="img-circle img-responsive img-raised">
 	                        </div>
 	                        <div class="name">
 	                            <h3 class="title">Welcome <?php echo $name; ?></h3>
 	                            
 								<a href="add_paddle.php?u_id=<?php echo $user_id; ?>" class="btn btn-primary btn-large">Add Paddle</a>
+                        <a href="edit_profile.php?u_id=<?php echo $user_id; ?>" class="btn btn-info btn-large">Edit Profile</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -106,6 +107,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
                                   $get_all_paddles = mysqli_query($connection,$query);
                                   confirm($get_all_paddles);
                                     
+                                if(mysqli_num_rows($get_all_paddles)>0){
                                     while($row = mysqli_fetch_assoc($get_all_paddles)){
                                         $paddle_id       = $row['paddle_id'];
                                         $paddle_date     = date("m-d-Y", strtotime($row['paddle_date']));
@@ -132,7 +134,10 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
                                             <a rel='tooltip' title='Delete Entry' href='profile.php?delete={$paddle_id}' class='btn btn-danger btn-simple btn-xs'><i class='fa fa-times'></i></a>
                                         </td>";
                                     echo "</tr>";
-                                     } // end while ?> 
+                                     } // end while
+                                } else {
+                                    echo "<tr><td>Nothing here?<a href='add_paddle.php?u_id=$user_id' class='btn btn-primary btn-large text-center'>Add a Paddle!</a></td></tr>";
+                                } // end else?> 
 
 							    </tbody>
 							    

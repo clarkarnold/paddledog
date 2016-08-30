@@ -66,9 +66,9 @@
 
        if(!$error){
 
-       $query = "INSERT INTO users(user_name, user_email, user_password) ";
+       $query = "INSERT INTO users(user_name, user_email, user_password, user_image) ";
 
-       $query .= "VALUES('{$user_name}', '{$user_email}', '{$hashed_password}')";
+       $query .= "VALUES('{$user_name}', '{$user_email}', '{$hashed_password}', 'user_default.png')";
 
        $create_user_query = mysqli_query($connection, $query);
        confirm($create_user_query);

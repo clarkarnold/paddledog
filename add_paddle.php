@@ -17,6 +17,9 @@
         $paddle_image = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
         move_uploaded_file($paddle_image_temp, "images/$paddle_image");
+        if(empty($paddle_image)){
+            $paddle_image = 'paddle_default.jpg';
+        }
         
         
         

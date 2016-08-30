@@ -63,10 +63,12 @@
            $user_password = password_hash($user_password);
            
            if(!error){
+               
+               $user_image = 'user_default.png';
           
-           $query = "INSERT INTO users(user_name, user_email, user_password) ";
+           $query = "INSERT INTO users(user_name, user_email, user_password, user_image) ";
        
-           $query .= "VALUES('{$user_name}', '{$user_email}', '{$user_password}')";
+           $query .= "VALUES('{$user_name}', '{$user_email}', '{$user_password}', '{$user_image}')";
            
            $create_user_query = mysqli_query($connection, $query);
            confirm($create_user_query);
