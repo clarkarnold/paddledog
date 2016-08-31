@@ -12,6 +12,7 @@ if(isset($_GET['u_id'])){
     confirm($user_data);
     
     while($row=mysqli_fetch_assoc($user_data)){
+
         $user_name = $row['user_name'];
         $user_email = $row['user_email'];
         $user_password = $row['user_password'];
@@ -19,7 +20,43 @@ if(isset($_GET['u_id'])){
     }
     
 }
+
+
+if(isset($_POST['edit_user'])){
+    $user_email = trim($_POST['user_email']);
+   $user_email = strip_tags($user_email);
+   $user_email = htmlspecialchars($user_email);
     
+    $user_name = trim($_POST['user_name']);
+    $user_name = strip_tags($user_name);
+    $user_name = htmlspecialchars($user_name);
+    
+
+    
+    if(!empty($_POST['user_password'])){
+        $user_password = trim($_POST['user_password']);
+        $user_password = strip_tags($user_password);
+        $user_password = htmlspecialchars($user_password);
+        
+        $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
+    }
+    
+    $user_image_edit = $_FILES['user_image']['name'];
+    $user_image_temp = $_FILES['user_image']['tmp_name'];
+    if(empty($user_image_temp)){
+        $user_image_edit = $user_image;
+    } else {
+        move_uploaded_file($user_image_temp, "images/$user_image_edit");
+    }
+    
+    $query = "UPDATE users SET user_name = '{$user_name}', user_email = '{$user_email}', user_password = '{$hashed_password}', ";
+    $query .= "user_image = '{$user_image_edit}' WHERE user_id = {$user_id}";
+    
+    $update_profile_query = mysqli_query($connection, $query);
+    confirm($update_profile_query);
+    
+    header("Location: profile.php");
+}
 
 
 
@@ -71,16 +108,20 @@ if(isset($_GET['u_id'])){
 								<span class="input-group-addon">
 										<i class="material-icons">lock</i>
 									</span>
-									<input name="user_password" type="password" class="form-control" value="<?php echo $user_password; ?>">
+									<input name="user_password" type="password" class="form-control" value="" placeholder="Enter new password">
 								</div>
                                 <span class="text-danger"></span>
                                 <div class="input-group">
+                                  <span class="input-group-addon">
+										<i class="material-icons">insert_photo</i>
+									</span>
                                    <label for="user_image">Change Image</label>
                                     <input class="" type="file" name="user_image" value="<?php echo $user_image ?>">
                                 </div>
-                                <div class="input-group">
-                                    <input type="button" type="reset" value="Reset" class="btn btn-danger">
-                                    <input type="button" type="submit" value="Submit" class="btn btn-success" name="edit_user">
+                                <div class="row"></div>
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <input  type="reset" value="Reset" class="btn btn-danger">
+                                    <input  type="submit" value="Submit" class="btn btn-success" name="edit_user">
                                 </div>
                             </div>
                         </form>

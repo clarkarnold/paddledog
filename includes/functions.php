@@ -9,11 +9,11 @@ function confirm($query) {
     }
 }
 
-function select_users($user_name){
+function select_users($user_id){
     
-    // takes a username as a parameter and returns all data from users table
+    // takes a user id as a parameter and returns all data from users table
     global $connection;
-    $query = "SELECT * FROM users WHERE user_name = '{$user_name}'";
+    $query = "SELECT * FROM users WHERE user_id = '{$user_id}'";
     $access_profile = mysqli_query($connection, $query);
     confirm($access_profile);
     return $access_profile;

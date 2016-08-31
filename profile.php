@@ -4,13 +4,14 @@
 //if(!isset($_SESSION['user_name'])){
 //    header("Location: signup.php");
 //} else {
-    $name = $_SESSION['user_name'];
+    $user_id = $_SESSION['user_id'];
 
-    $access_profile = select_users($name);
+    $access_profile = select_users($user_id);
 
     
 
 while($row = mysqli_fetch_assoc($access_profile)){
+    $user_name = $row['user_name'];
     $user_email = $row['user_email'];
     $user_id    = $row['user_id'];
     $user_image = $row['user_image'];
@@ -45,7 +46,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 	                            <img src="images/<?php echo $user_image; ?>" alt="Circle Image" class="img-circle img-responsive img-raised">
 	                        </div>
 	                        <div class="name">
-	                            <h3 class="title">Welcome <?php echo $name; ?></h3>
+	                            <h3 class="title">Welcome <?php echo $user_name; ?></h3>
 	                            
 								<a href="add_paddle.php?u_id=<?php echo $user_id; ?>" class="btn btn-primary btn-large">Add Paddle</a>
                         <a href="edit_profile.php?u_id=<?php echo $user_id; ?>" class="btn btn-info btn-large">Edit Profile</a>

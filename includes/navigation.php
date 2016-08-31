@@ -48,7 +48,7 @@
                 
 		            </li>
 		            <?php
-                        if(isset($_SESSION['user_name'])){
+                        if(isset($_SESSION['user_id'])){
                             echo "
                             <li><a href='profile.php'>Profile</a>
                             </li>

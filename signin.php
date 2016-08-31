@@ -57,8 +57,7 @@ $emailError=""; $passError=""; $errMsg = "";
            
            
            if (password_verify($user_password, $db_password)){
-               $_SESSION['user_name'] = $db_name;
-               $_SESSION['user_email'] = $db_email;
+               $_SESSION['user_id'] = $db_id;
                header("Location: profile.php");
            } else {
                $errMsg = "Invalid email/password, try again.";
