@@ -35,7 +35,7 @@
         
         $add_paddle_query = mysqli_query($connection, $query);
         confirm($add_paddle_query);
-        
+        header("Location: profile.php");
         
     }
     

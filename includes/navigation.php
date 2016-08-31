@@ -20,7 +20,7 @@
         	<div class="collapse navbar-collapse" id="navigation-example">
         		<ul class="nav navbar-nav navbar-right">
     				<li>
-    					<a href="#">
+    					<a href="about.php">
     						About Us
     					</a>
     				</li>
@@ -31,6 +31,7 @@
 						</a>
     				</li>
 -->
+<!--
 		            <li>
 		                <a href="#" target="_blank" class="btn btn-simple btn-white btn-just-icon">
 							<i class="fa fa-twitter"></i>
@@ -41,12 +42,15 @@
 							<i class="fa fa-facebook-square"></i>
 						</a>
 		            </li>
+-->
+<!--
 					<li>
 		                <a href="#" target="_blank" class="btn btn-simple btn-white btn-just-icon">
 							<i class="fa fa-instagram"></i>
 						</a>
                 
 		            </li>
+-->
 		            <?php
                         if(isset($_SESSION['user_id'])){
                             echo "

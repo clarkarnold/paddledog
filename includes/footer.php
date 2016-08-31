@@ -8,24 +8,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="about.php">
                            About Us
                         </a>
                     </li>
+
                     <li>
-                        <a href="http://blog.creative-tim.com">
-                           Blog
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://www.creative-tim.com/license">
+                        <a href="">
                             Licenses
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="copyright pull-right">
-                &copy; 2016, made with <i class="fa fa-heart heart"></i> by <a href="http://www.clarnold.com" target="_blank">Clarnold</a>
+                &copy; 2016, made with <i class="fa fa-heart heart"></i> by <a href="http://www.clarnold.com" target="_blank">Clark</a>
             </div>
         </div>
     </footer>
