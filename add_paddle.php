@@ -2,6 +2,11 @@
 <body class="index-page">
 <?php include "includes/navigation.php"; ?>
 <?php
+    if(!isset($_SESSION['user_id'])){
+    header("Location: signup.php");
+} 
+    
+    
     if(isset($_GET['u_id'])){
         $user_id = $_GET['u_id'];
     }
@@ -25,6 +30,7 @@
         
     $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image) ";
         $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}') ";
+        
         
         $add_paddle_query = mysqli_query($connection, $query);
         confirm($add_paddle_query);

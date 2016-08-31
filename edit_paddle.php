@@ -2,6 +2,11 @@
 <body class="index-page">
 <?php include "includes/navigation.php"; ?>
 <?php
+    
+    if(!isset($_SESSION['user_id'])){
+    header("Location: signup.php");
+} 
+    
     if(isset($_GET['p_id'])){
         $paddle_id = $_GET['p_id'];
         

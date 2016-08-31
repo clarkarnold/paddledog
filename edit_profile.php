@@ -1,9 +1,9 @@
 <?php include "includes/header.php"; ?>
 <?php
 
-//if(!isset($_SESSION['user_name'])){
-//    header("Location: signup.php");
-//} else {
+if(!isset($_SESSION['user_id'])){
+    header("Location: signup.php");
+} 
 
 if(isset($_GET['u_id'])){
     $user_id = $_GET['u_id'];

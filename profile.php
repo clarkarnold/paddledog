@@ -1,9 +1,10 @@
 <?php include "includes/header.php"; ?>
 <?php
 
-//if(!isset($_SESSION['user_name'])){
-//    header("Location: signup.php");
-//} else {
+if(!isset($_SESSION['user_id'])){
+    header("Location: signup.php");
+} 
+
     $user_id = $_SESSION['user_id'];
 
     $access_profile = select_users($user_id);
@@ -87,7 +88,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 	                <div class="row">
 	                    <div class="col-md-6 col-md-offset-3">
                             <h3>Recent Paddles</h3>
-	                        <table class="table">
+	                        <table class="table table-hover">
 							    <thead>
 							        <tr>
 							        <th>Image</th>
@@ -103,42 +104,10 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
                                 
                                    
                                    <?php
-      
-                                  $query = "SELECT * FROM paddles WHERE paddle_user = {$user_id}";
-                                  $get_all_paddles = mysqli_query($connection,$query);
-                                  confirm($get_all_paddles);
                                     
-                                if(mysqli_num_rows($get_all_paddles)>0){
-                                    while($row = mysqli_fetch_assoc($get_all_paddles)){
-                                        $paddle_id       = $row['paddle_id'];
-                                        $paddle_date     = date("m-d-Y", strtotime($row['paddle_date']));
-                                        $paddle_location = $row['paddle_location'];
-                                        $paddle_distance = $row['paddle_distance'];
-                                        $paddle_duration = $row['paddle_duration'];
-                                        $paddle_image    = $row['paddle_image'];
-                                        
-                                        if(empty($paddle_image)){
-                                            $paddle_image = "user_default.jpg";
-                                        }
-                                        
+                                    view_all_paddles($user_id);
                                     
-                                    echo "<tr>";
-                                    echo "<td><img src='images/$paddle_image'' alt='' class='img-rounded img-raised' height='50px'></td>";
-                                    echo "<td>$paddle_date</td>";
-                                    echo "<td>$paddle_location</td>";
-                                    echo "<td>$paddle_distance mi</td>";
-                                    echo "<td>$paddle_duration min</td>";
-                                    echo  "<td class='text-right'>
-                                            <a href='edit_paddle.php?p_id={$paddle_id}' class='btn btn-info btn-simple btn-xs'>
-							                     <i class='fa fa-edit'></i>
-							                 </a>
-                                            <a rel='tooltip' title='Delete Entry' href='profile.php?delete={$paddle_id}' class='btn btn-danger btn-simple btn-xs'><i class='fa fa-times'></i></a>
-                                        </td>";
-                                    echo "</tr>";
-                                     } // end while
-                                } else {
-                                    echo "<tr><td>Nothing here?<a href='add_paddle.php?u_id=$user_id' class='btn btn-primary btn-large text-center'>Add a Paddle!</a></td></tr>";
-                                } // end else?> 
+                                  ?> 
 
 							    </tbody>
 							    

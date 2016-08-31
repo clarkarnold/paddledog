@@ -1,5 +1,11 @@
 <?php include "includes/header.php"; ?>
+<?php 
 
+if(isset($_SESSION['user_id'])){
+    header("Location: profile.php");
+}
+
+?>
 <body class="landing-page">
 
 <!-- Navbar will come here -->

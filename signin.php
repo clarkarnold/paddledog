@@ -3,7 +3,7 @@
 <?php include "includes/navigation.php"; ?>
 <?php
     
-    if(isset($_SESSION['user_name'])) {
+    if(isset($_SESSION['user_id'])) {
         header("Location: profile.php");
     }
     

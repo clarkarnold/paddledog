@@ -3,9 +3,9 @@
 <?php include "includes/navigation.php"; ?>
 <?php
     
-//    if(isset($_SESSION['user_name'])!== "") {
-//        header("Location: profile.php");
-//    }
+if(isset($_SESSION['user_id'])){
+    header("Location: profile.php");
+} 
     
     
     $nameError = ""; $emailError=""; $passError="";
