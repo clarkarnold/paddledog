@@ -73,8 +73,12 @@ if(isset($_SESSION['user_id'])){
        $create_user_query = mysqli_query($connection, $query);
        confirm($create_user_query);
         if($create_user_query){
-            $_SESSION['user_name'] = $user_name;
-            $_SESSION['user_email'] = $user_email;
+            $query = "SELECT user_id FROM users WHERE user_email = '{$user_email}'";
+            $get_user_id = mysqli_query($connection, $query);
+            confirm($get_user_id);
+            $user_id_array = mysqli_fetch_assoc($get_user_id);
+            $user_id = $user_id_array['user_id'];
+            $_SESSION['user_id'] = $user_id;
             header("Location: profile.php");
         }
        

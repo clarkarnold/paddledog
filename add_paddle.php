@@ -16,6 +16,7 @@
         $paddle_location = $_POST['paddle_location'];
         $paddle_distance = $_POST['paddle_distance'];
         $paddle_duration = $_POST['paddle_duration'];
+        $paddle_notes    = $_POST['paddle_notes'];
 
         // all image files
  
@@ -28,8 +29,8 @@
         
         
         
-    $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image) ";
-        $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}') ";
+    $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) ";
+        $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}', '{$paddle_notes}') ";
         
         
         $add_paddle_query = mysqli_query($connection, $query);
@@ -90,6 +91,10 @@
                                 </div>
                             </div>
                             <div class="row">
+                               <div class="col-md-6">
+                                  
+                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="Notes..."></textarea>
+                               </div>
                                 <div class="col-md-6">
                                         <div class="">
                                             <label for="paddle_image">Paddle Image</label>

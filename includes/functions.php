@@ -54,9 +54,11 @@ function view_all_paddles($user_id){
         echo "</tr>";
          } // end while
     } else {
-        echo "<tr><td>Nothing here?<a href='add_paddle.php?u_id=$user_id' class='btn btn-primary btn-large text-center'>Add a Paddle!</a></td></tr>";
+        echo "<tr><td>Nothing here? <strong><a href='add_paddle.php?u_id=$user_id' class=''>Add a Paddle!</a></strong></td></tr>";
     } // end else
 }
+
+
 
 
 ?>

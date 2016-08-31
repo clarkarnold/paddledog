@@ -20,6 +20,7 @@
             $paddle_distance = $row['paddle_distance'];
             $paddle_duration = $row['paddle_duration'];
             $paddle_image    = $row['paddle_image'];
+            $paddle_notes    = $row['paddle_notes'];
         }
     }
     
@@ -35,39 +36,32 @@
 	                    <div class="profile">
 	                        <div class="avatar">
                                
-                                <a href="#" data-toggle="modal" data-target="#myModal"><img src="images/<?php echo $paddle_image; ?>" alt="Circle Image" class="img-rounded img-responsive img-raised"></a>
+                                <img src="images/<?php echo $paddle_image; ?>" alt="Circle Image" class="img-rounded img-responsive img-raised">
                                 
-                           <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                    <img src="images/<?php echo $paddle_image;?>" alt="Image from paddle" class="img-responsive img-rounded">
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+
                             
                             
                             </div>
                             <div class="name">
-                                <h1><?php echo $paddle_date; ?></h1>
+                                <h1 class="">Paddle on: <?php echo $paddle_date; ?></h1>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-4"><h4>Location</h4></div>
-                                <div class="col-sm-4"><h4>Distance</h4></div>
-                                <div class="col-sm-4"><h4>Duration</h4></div>
+                            <div class="row text-info">
+                                <div class="col-sm-4"><h2>Location</h2></div>
+                                <div class="col-sm-4"><h2>Distance</h2></div>
+                                <div class="col-sm-4"><h2>Duration</h2></div>
+                                
                             </div>
                             <div class="row">
                                 <div class="col-sm-4"><h3><?php echo $paddle_location; ?></h3></div>
                                 <div class="col-sm-4"><h3><?php echo $paddle_distance; ?></h3></div>
                                 <div class="col-sm-4"><h3><?php echo $paddle_duration; ?></h3></div>
+                                
+                            </div>
+                            <div class="row">
+                                <h2 class="text-info">Notes</h2>
+                            </div>
+                            <div class="row">
+                                <h3><?php echo $paddle_notes; ?></h3>
                             </div>
                             <div class="" style="height: 50px;"></div>
                             <div class="row"

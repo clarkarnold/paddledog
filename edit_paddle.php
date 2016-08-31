@@ -19,6 +19,7 @@
             $paddle_location = $row['paddle_location'];
             $paddle_distance = $row['paddle_distance'];
             $paddle_duration = $row['paddle_duration'];
+            $paddle_notes    = $row['paddle_notes'];
             $paddle_image    = $row['paddle_image'];
         }
     }
@@ -30,6 +31,7 @@
         $paddle_location = $_POST['paddle_location'];
         $paddle_distance = $_POST['paddle_distance'];
         $paddle_duration = $_POST['paddle_duration'];
+        $paddle_notes    = $_POST['paddle_notes'];
         
         $paddle_image_edit    = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
@@ -41,7 +43,7 @@
         move_uploaded_file($paddle_image_temp, "images/$paddle_image_edit");
         
         $query = "UPDATE paddles SET paddle_date = STR_TO_DATE('$paddle_date', '%m-%d-%Y'), paddle_location = '{$paddle_location}', ";
-        $query .= "paddle_distance = {$paddle_distance}, paddle_duration = {$paddle_duration}, paddle_image = '{$paddle_image_edit}' WHERE paddle_id = {$paddle_id}";
+        $query .= "paddle_distance = {$paddle_distance}, paddle_duration = {$paddle_duration}, paddle_image = '{$paddle_image_edit}', paddle_notes = '{$paddle_notes}' WHERE paddle_id = {$paddle_id}";
         
         $edit_paddle_query = mysqli_query($connection, $query);
         confirm($edit_paddle_query);
@@ -99,6 +101,10 @@
                                 </div>
                             </div>
                             <div class="row">
+                            <div class="col-md-6">
+                                  
+                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="<?php echo $paddle_notes; ?>"></textarea>
+                               </div>
                             <div class="col-md-6">
                                 <div class="">
                                    <label for="">Image</label>
