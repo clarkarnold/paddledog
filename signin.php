@@ -43,7 +43,7 @@ $emailError=""; $passError=""; $errMsg = "";
 
        if(!$error){
            
-           $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
+           
            $query = "SELECT * FROM users WHERE user_email = '{$user_email}'";
            
            $get_user_query = mysqli_query($connection,$query);

@@ -12,6 +12,8 @@ session_start();
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" href="assets/img/favicon.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<link rel="icon" type="image/ico" href="images/anchor.ico" />
 
 	<title>Paddledog - Your personal paddle board tracker</title>
 

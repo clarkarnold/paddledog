@@ -38,7 +38,7 @@ if(isset($_POST['edit_user'])){
         $user_password = strip_tags($user_password);
         $user_password = htmlspecialchars($user_password);
         
-        $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
+        $user_password = password_hash($user_password, PASSWORD_DEFAULT);
     }
     
     $user_image_edit = $_FILES['user_image']['name'];
@@ -49,7 +49,7 @@ if(isset($_POST['edit_user'])){
         move_uploaded_file($user_image_temp, "images/$user_image_edit");
     }
     
-    $query = "UPDATE users SET user_name = '{$user_name}', user_email = '{$user_email}', user_password = '{$hashed_password}', ";
+    $query = "UPDATE users SET user_name = '{$user_name}', user_email = '{$user_email}', user_password = '{$user_password}', ";
     $query .= "user_image = '{$user_image_edit}' WHERE user_id = {$user_id}";
     
     $update_profile_query = mysqli_query($connection, $query);
@@ -119,9 +119,12 @@ if(isset($_POST['edit_user'])){
                                     <input class="" type="file" name="user_image" value="<?php echo $user_image ?>">
                                 </div>
                                 <div class="row"></div>
-                                <div class="col-sm-8 col-sm-offset-2">
-                                    <input  type="reset" value="Reset" class="btn btn-danger">
+                                <div class="text-center">
+                                    <input  type="reset" value="Reset" class="btn btn-danger btn-simple">
                                     <input  type="submit" value="Submit" class="btn btn-success" name="edit_user">
+                                </div>
+                                <div class="row text-center">
+                                    <p class="text-warning"><a href="edit_profile.php?deleteuser=<?php echo $user_id; ?>" class="text-danger">Delete Profile</a> Warning: This cannot be undone.</p>
                                 </div>
                             </div>
                         </form>
@@ -139,5 +142,11 @@ if(isset($_POST['edit_user'])){
 <script>
   
 </script>
+<?php
+    if(isset($_GET['deleteuser'])){
+         $_GET['deleteuser'];
+    }
+    
+    ?>
 
 <?php include "includes/footer.php"; ?>
