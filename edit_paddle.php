@@ -76,7 +76,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="">Date</label>
-                                        <input name="paddle_date" class="datepicker form-control" type="text" value="<?php echo  $paddle_date; ?>"/>
+                                        <input id="dates" name="paddle_date" class="datepicker form-control" type="text" value="<?php echo  $paddle_date; ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

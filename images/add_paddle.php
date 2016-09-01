@@ -66,7 +66,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                        <label for="">Date</label>
-                                        <input id="dates" name="paddle_date" class="datepicker form-control" type="date" value="<?php echo date("m/d/Y"); ?>"/>
+                                        <input name="paddle_date" class="datepicker form-control" type="text" value="<?php echo date("m/d/Y"); ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
