@@ -9,8 +9,10 @@
     
     if(isset($_GET['p_id'])){
         $paddle_id = $_GET['p_id'];
+        $user_id = $_SESSION['user_id'];
         
-        $query = "SELECT * FROM paddles WHERE paddle_id = {$paddle_id}";
+        
+        $query = "SELECT * FROM paddles WHERE paddle_id = {$paddle_id} AND paddle_user = {$user_id}";
         $get_paddle = mysqli_query($connection, $query);
         confirm($get_paddle);
         

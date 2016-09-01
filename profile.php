@@ -36,7 +36,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 <body class="profile-page">
 <?php include "includes/navigation.php"; ?>
 <div class="wrapper">
-		<div class="header header-filter" style="background-image: url('https://hd.unsplash.com/photo-1428534302776-5c6a2dca0380');"></div>
+		<div class="header header-filter" style="background-image: url('images/wave.jpg'); background-position: bottom;"></div>
 
 		<div class="main main-raised">
 			<div class="profile-content">
@@ -49,8 +49,8 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 	                        <div class="name">
 	                            <h3 class="title">Welcome <?php echo $user_name; ?></h3>
 	                            
-								<a href="add_paddle.php?u_id=<?php echo $user_id; ?>" class="btn btn-primary btn-large">Add Paddle</a>
-                        <a href="edit_profile.php?u_id=<?php echo $user_id; ?>" class="btn btn-info btn-large">Edit Profile</a>
+								<a href="add_paddle.php" class="btn btn-primary btn-large">Add Paddle</a>
+                        <a href="edit_profile.php" class="btn btn-info btn-large">Edit Profile</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -128,7 +128,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 <?php
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $query = "DELETE FROM paddles WHERE paddle_id = {$id}";
+    $query = "DELETE FROM paddles WHERE paddle_id = {$id} AND paddle_user = $user_id";
     $delete_paddle = mysqli_query($connection,$query);
     confirm($delete_paddle);
     header("Location: profile.php");

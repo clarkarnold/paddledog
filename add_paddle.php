@@ -7,8 +7,8 @@
 } 
     
     
-    if(isset($_GET['u_id'])){
-        $user_id = $_GET['u_id'];
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
     }
     
     if(isset($_POST['add_paddle'])){

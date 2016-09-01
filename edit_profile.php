@@ -5,8 +5,8 @@ if(!isset($_SESSION['user_id'])){
     header("Location: signup.php");
 } 
 
-if(isset($_GET['u_id'])){
-    $user_id = $_GET['u_id'];
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
     $query = "SELECT * FROM users WHERE user_id = {$user_id}";
     $user_data = mysqli_query($connection, $query);
     confirm($user_data);
@@ -124,7 +124,7 @@ if(isset($_POST['edit_user'])){
                                     <input  type="submit" value="Submit" class="btn btn-success" name="edit_user">
                                 </div>
                                 <div class="row text-center">
-                                    <p class="text-warning"><a href="edit_profile.php?deleteuser=<?php echo $user_id; ?>" class="text-danger">Delete Profile</a> Warning: This cannot be undone.</p>
+                                    <p class="text-warning"><a href="edit_profile.php?deleteuser=<?php echo $user_id; ?>" class="text-danger">Delete Profile </a> (Warning: This cannot be undone.)</p>
                                 </div>
                             </div>
                         </form>
