@@ -20,7 +20,7 @@ if(isset($_SESSION['user_id'])){
 						<h1 class="title">PaddleDog</h1>
 	                    <h4>Your personal paddle board tracker.</h4>
 	                    <br />
-	                    <a href="signup.php" class="btn btn-danger btn-raised btn-lg">
+	                    <a href="signup.php" class="btn btn-primary btn-raised btn-lg">
 							 Sign Up
 						</a>
 						<a href="signin.php" class="btn btn-info btn-raised btn-lg">
