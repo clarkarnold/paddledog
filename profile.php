@@ -59,7 +59,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 					<div class="row">
 						<div class="col-md-6 col-md-offset-3">
 							<h2>All Time Totals</h2>
-                            
+                            <div class="table-responsive">
                             <table class="table">
 							    <thead>
                                     <tr>
@@ -81,6 +81,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
                                         
 							    </tbody>
 							</table>
+							</div>
 							<!-- End Profile Tabs -->
 						</div>
 	                </div>
@@ -88,6 +89,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 	                <div class="row">
 	                    <div class="col-md-6 col-md-offset-3">
                             <h3>Recent Paddles</h3>
+                            <div class="table-responsive">
 	                        <table class="table table-hover">
 							    <thead>
 							        <tr>
@@ -112,6 +114,7 @@ while($row = mysqli_fetch_assoc($get_paddle_query)){
 							    </tbody>
 							    
 							</table>
+                            </div>
 	                    </div>
 	                </div>
 

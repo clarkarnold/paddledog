@@ -15,7 +15,8 @@
         confirm($get_paddle);
         
         while($row = mysqli_fetch_assoc($get_paddle)){
-            $paddle_date = date("m-d-Y", strtotime($row['paddle_date']));
+            echo $paddle_date = date("m/d/Y", strtotime($row['paddle_date']));
+            
             $paddle_location = $row['paddle_location'];
             $paddle_distance = $row['paddle_distance'];
             $paddle_duration = $row['paddle_duration'];
@@ -42,7 +43,7 @@
         
         move_uploaded_file($paddle_image_temp, "images/$paddle_image_edit");
         
-        $query = "UPDATE paddles SET paddle_date = STR_TO_DATE('$paddle_date', '%m-%d-%Y'), paddle_location = '{$paddle_location}', ";
+        $query = "UPDATE paddles SET paddle_date = STR_TO_DATE('$paddle_date', '%m/%d/%Y'), paddle_location = '{$paddle_location}', ";
         $query .= "paddle_distance = {$paddle_distance}, paddle_duration = {$paddle_duration}, paddle_image = '{$paddle_image_edit}', paddle_notes = '{$paddle_notes}' WHERE paddle_id = {$paddle_id}";
         
         $edit_paddle_query = mysqli_query($connection, $query);

@@ -28,7 +28,7 @@ function view_all_paddles($user_id){
     if(mysqli_num_rows($get_all_paddles)>0){
         while($row = mysqli_fetch_assoc($get_all_paddles)){
             $paddle_id       = $row['paddle_id'];
-            $paddle_date     = date("m-d-Y", strtotime($row['paddle_date']));
+            $paddle_date     = date("m/d/Y", strtotime($row['paddle_date']));
             $paddle_location = $row['paddle_location'];
             $paddle_distance = $row['paddle_distance'];
             $paddle_duration = $row['paddle_duration'];

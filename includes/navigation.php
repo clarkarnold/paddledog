@@ -50,7 +50,9 @@
 						</a>
                 
 		            </li>
+		            
 -->
+                
 		            <?php
                         if(isset($_SESSION['user_id'])){
                             echo "
@@ -59,6 +61,9 @@
                             <li><a href='logout.php?logout'  class=''>
                             Logout
 						</a></li>";
+                        } else {
+                            echo "<li><a href='signin.php'>Log In</a></li>
+                <li><a href='signup.php'>Sign Up</a></li>";
                         }
                     
                     ?>
