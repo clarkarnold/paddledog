@@ -15,7 +15,7 @@
         confirm($get_paddle);
         
         while($row = mysqli_fetch_assoc($get_paddle)){
-            echo $paddle_date = date("m/d/Y", strtotime($row['paddle_date']));
+            $paddle_date = date("m/d/Y", strtotime($row['paddle_date']));
             
             $paddle_location = $row['paddle_location'];
             $paddle_distance = $row['paddle_distance'];
@@ -104,7 +104,7 @@
                             <div class="row">
                             <div class="col-md-6">
                                   
-                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="<?php echo $paddle_notes; ?>"></textarea>
+                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="" value="<?php echo $paddle_notes; ?>"></textarea>
                                </div>
                             <div class="col-md-6">
                                 <div class="">

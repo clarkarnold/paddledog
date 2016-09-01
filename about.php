@@ -2,21 +2,19 @@
 <?php
 
 ?>
-<body class="profile-page">
+<body class="index-page">
 <?php include "includes/navigation.php"; ?>
 <div class="wrapper">
-		<div class="header header-filter" style="background-image: url('https://hd.unsplash.com/photo-1428534302776-5c6a2dca0380');"></div>
+		<div class="header " style="background-image: url('images/about.jpg'); background-position: bottom;"></div>
 
 		<div class="main main-raised">
 			<div class="profile-content">
 	            <div class="container">
 	                <div class="row">
 	                    <div class="profile">
-	                        <div class="avatar">
-	                            <img src="images/about.jpg" alt="Circle Image" class="img-circle img-responsive img-raised">
-	                        </div>
+	                        
 	                        <div class="name">
-	                            <h1>About Us</h1>
+	                            <h1 class="text-center">About Us</h1>
 	                            <div class="col-sm-6 col-sm-offset-3">
 	                            <p>We are just a couple of paddle boarders who love to go out paddling with our dog!</p>
 	                           <p>I was using a typical fitness tracker to record our paddle outings, but 
