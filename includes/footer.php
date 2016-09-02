@@ -41,5 +41,19 @@
 
 	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 	<script src="js/material-kit.js" type="text/javascript"></script>
+	
+	
+
+<script>
+    $(document).ready(function(){
+        if($(window).width() < 788){
+            $('#navbar').addClass("navbar-info");
+            $('#navbar').removeClass("navbar-transparent");
+        } else {
+            $('#navbar').addClass("navbar-transparent");
+            $('#navbar').removeClass("navbar-info");
+        }
+    });
+</script>
 
 </html>

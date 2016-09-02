@@ -42,9 +42,15 @@ if(isset($_POST['edit_user'])){
     }
     
     $user_image_edit = $_FILES['user_image']['name'];
+    $user_file_type  = $_FILES['user_image']['type'];
     $user_image_temp = $_FILES['user_image']['tmp_name'];
+    $image_error = "";
+    
+    $allowed_filetypes = ["image/jpeg", "image/gif", "image/png"];
     if(empty($user_image_temp)){
         $user_image_edit = $user_image;
+    } else if(!in_array($user_file_type, $allowed_filetypes)) {
+        $image_error = "Only Images Allowed";
     } else {
         move_uploaded_file($user_image_temp, "images/$user_image_edit");
     }
@@ -117,6 +123,12 @@ if(isset($_POST['edit_user'])){
 									</span>
                                    <label for="user_image">Change Image</label>
                                     <input class="" type="file" name="user_image" value="<?php echo $user_image ?>">
+                                    <?php
+                                        if($image_error){
+                                            echo "Error: " . $image_error;
+                                        }
+    
+                                        ?>    
                                 </div>
                                 <div class="row"></div>
                                 <div class="text-center">

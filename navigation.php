@@ -1,7 +1,7 @@
 
        
 
-<nav id="navbar" class="navbar navbar-absolute navbar-transparent">
+<nav id="navbar" class="navbar navbar-info navbar-absolute">
     	<div class="container">
         	<!-- Brand and toggle get grouped for better mobile display -->
         	<div class="navbar-header">
@@ -50,9 +50,7 @@
 						</a>
                 
 		            </li>
-		            
 -->
-                
 		            <?php
                         if(isset($_SESSION['user_id'])){
                             echo "
@@ -62,7 +60,7 @@
                             Logout
 						</a></li>";
                         } else {
-                            echo "<li><a href='signin.php'>Log In</a></li>
+                            echo "<li><a href='signin.php'>Sign In</a></li>
                 <li><a href='signup.php'>Sign Up</a></li>";
                         }
                     

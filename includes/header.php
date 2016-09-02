@@ -27,4 +27,5 @@ session_start();
 	<!-- CSS Files -->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/material-kit.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/style.css">
 </head>
