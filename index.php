@@ -1,9 +1,20 @@
 <?php include "includes/header.php"; ?>
+
 <?php 
 
 if(isset($_SESSION['user_id'])){
     header("Location: profile.php");
 }
+
+?>
+
+<?php
+	$query = require 'core/bootstrap.php';
+
+	$paddles = $query->selectAll('paddles');
+
+	print_r($paddles);
+
 
 ?>
 <body class="landing-page">

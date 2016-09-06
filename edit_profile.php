@@ -41,19 +41,42 @@ if(isset($_POST['edit_user'])){
         $user_password = password_hash($user_password, PASSWORD_DEFAULT);
     }
     
-    $user_image_edit = $_FILES['user_image']['name'];
-    $user_file_type  = $_FILES['user_image']['type'];
-    $user_image_temp = $_FILES['user_image']['tmp_name'];
+    $user_image_edit = $user_image;
     $image_error = "";
     
-    $allowed_filetypes = ["image/jpeg", "image/gif", "image/png"];
-    if(empty($user_image_temp)){
-        $user_image_edit = $user_image;
-    } else if(!in_array($user_file_type, $allowed_filetypes)) {
-        $image_error = "Only Images Allowed";
-    } else {
-        move_uploaded_file($user_image_temp, "images/$user_image_edit");
+    
+    if($_FILES){
+        $allowedExtensions = array("jpg", "png", "gif");
+        
+        foreach($_FILES as $key=>$val){
+            
+            // having some issues here.
+            if(!empty($val['tmp_name'])){
+                
+                $tempext = explode(".", strtolower(basename($val['name'])));
+                $ext = end($tempext);
+                if(in_array($ext,$allowedExtensions)){
+                    $file = "images/" . basename($val['name']);
+                    
+                    if(move_uploaded_file($val['name'], $file)){
+                        $user_image_edit = basename($val['name']);
+                    }
+                        
+                } else {
+                    $image_error = "Image Files Only";
+                }
+            }
+        }
     }
+    
+//    $allowed_filetypes = ["image/jpeg", "image/gif", "image/png"];
+//    if(empty($user_image_temp)){
+//        $user_image_edit = $user_image;
+//    } else if(!in_array($user_file_type, $allowed_filetypes)) {
+//        $image_error = "Only Images Allowed";
+//    } else {
+//        move_uploaded_file($user_image_temp, "images/$user_image_edit");
+//    }
     
     $query = "UPDATE users SET user_name = '{$user_name}', user_email = '{$user_email}', user_password = '{$user_password}', ";
     $query .= "user_image = '{$user_image_edit}' WHERE user_id = {$user_id}";
@@ -61,7 +84,9 @@ if(isset($_POST['edit_user'])){
     $update_profile_query = mysqli_query($connection, $query);
     confirm($update_profile_query);
     
-    header("Location: profile.php");
+    if(!$image_error){
+        header("Location: profile.php");
+    }
 }
 
 
@@ -87,7 +112,21 @@ if(isset($_POST['edit_user'])){
 	                        </div>
 	                        <div class="name">
 	                            <h3 class="title">Welcome <?php echo $user_name; ?></h3>
-	
+	                                  <?php
+                                        if(!empty($image_error)){
+                                            echo "<div class='alert alert-warning'>
+                                            <div class='container-fluid'>
+                                               <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+		<span aria-hidden='true'><i class='material-icons'>clear</i></span>
+	  </button>
+                                                <b>Alert: </b>{$image_error} 
+                                            </div>
+                                        </div>";
+                                        }
+    
+                                        ?> 
+                                        
+                                        
 	                        </div>
 	                    </div>
 	                </div>
@@ -123,12 +162,7 @@ if(isset($_POST['edit_user'])){
 									</span>
                                    <label for="user_image">Change Image</label>
                                     <input class="" type="file" name="user_image" value="<?php echo $user_image ?>">
-                                    <?php
-                                        if($image_error){
-                                            echo "Error: " . $image_error;
-                                        }
-    
-                                        ?>    
+     
                                 </div>
                                 <div class="row"></div>
                                 <div class="text-center">
