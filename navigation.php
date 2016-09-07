@@ -20,7 +20,7 @@
         	<div class="collapse navbar-collapse" id="navigation-example">
         		<ul class="nav navbar-nav navbar-right">
     				<li>
-    					<a href="about.php">
+    					<a href="about">
     						About Us
     					</a>
     				</li>

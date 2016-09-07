@@ -6,7 +6,9 @@
 if(isset($_SESSION['user_id'])){
     header("Location: profile.php");
 } 
-    
+    require 'core/User.php';
+
+    $user = new User($db_conn);
     
     $nameError = ""; $emailError=""; $passError="";
    if (isset($_POST['create_user'])){
@@ -61,27 +63,16 @@ if(isset($_SESSION['user_id'])){
            $passError = "Password must have at least 6 characters.";
        }
 
-       // encrypt password
+       // hash password
        $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
        if(!$error){
-
-       $query = "INSERT INTO users(user_name, user_email, user_password, user_image) ";
-
-       $query .= "VALUES('{$user_name}', '{$user_email}', '{$hashed_password}', 'user_default.png')";
-
-       $create_user_query = mysqli_query($connection, $query);
-       confirm($create_user_query);
-        if($create_user_query){
-            $query = "SELECT user_id FROM users WHERE user_email = '{$user_email}'";
-            $get_user_id = mysqli_query($connection, $query);
-            confirm($get_user_id);
-            $user_id_array = mysqli_fetch_assoc($get_user_id);
-            $user_id = $user_id_array['user_id'];
-            $_SESSION['user_id'] = $user_id;
-            header("Location: profile.php");
+        if($user->register($user_name, $user_email, $user_password)){
+          $user_info = $user->selectUserByEmail($user_email);
+          $_SESSION['user_id'] = $user_info['user_id'];
+          header("Location: profile.php");
         }
-       
+
        }
    }
    ?>
@@ -90,7 +81,7 @@ if(isset($_SESSION['user_id'])){
 				<div class="row">
 					<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
 						<div class="card card-signup">
-							<form class="form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+							<form class="form" method="post" action="controllers/newuser.php">
 								<div class="header header-primary text-center">
 									<h4>Sign Up</h4>
 

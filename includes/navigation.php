@@ -11,7 +11,7 @@
 		            <span class="icon-bar"></span>
 		            <span class="icon-bar"></span>
         		</button>
-        		<a class="navbar-brand" href="index.php">
+        		<a class="navbar-brand" href="/paddledog">
         		    <i class="fa fa-anchor"></i>
         		    PaddleDog
         		</a>
@@ -20,7 +20,7 @@
         	<div class="collapse navbar-collapse" id="navigation-example">
         		<ul class="nav navbar-nav navbar-right">
     				<li>
-    					<a href="about.php">
+    					<a href="about">
     						About Us
     					</a>
     				</li>
