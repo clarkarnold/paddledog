@@ -28,7 +28,7 @@ class QueryBuilder
 
 	public function selectPaddlesByUser($user_id)
 	{
-		$stmt = $this->pdo->prepare("SELECT * FROM paddles WHERE paddle_user = {$user_id}");
+		$stmt = $this->pdo->prepare("SELECT * FROM paddles WHERE paddle_user = {$user_id} ORDER BY paddle_date DESC");
 		$stmt->execute();
 		return $stmt;
 	}

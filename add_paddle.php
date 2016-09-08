@@ -38,23 +38,30 @@
     //     $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}', '{$paddle_notes}') ";
 
 // this stmt is not working.. datetime is probably an issue.
-        
-        $stmt = $conn->prepare("INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) VALUES(:date, :distance, :duration, :location, :user, :image, :notes)");
-        $stmt->bindparam(":date", STR_TO_DATE('$paddle_date', '%m/%d/%Y'));
+
+
+        $sql = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) VALUES(STR_TO_DATE('$paddle_date','%m/%d/%Y'), :distance, :duration, :location, :user, :image, :notes)";
+        $stmt = $conn->prepare($sql);
+        if(!$stmt){
+            echo "no stmt<br>";
+            print_r($conn->errorInfo());
+        }
+        // $stmt->bindparam(":date", $paddle_date);
         $stmt->bindparam(":distance", $paddle_distance);
         $stmt->bindparam(":duration", $paddle_duration);
         $stmt->bindparam(":location", $paddle_location);
-        $stmt->bindparam(":user", $paddle_user);
+        $stmt->bindparam(":user", $user_id);
         $stmt->bindparam(":image", $paddle_image);
         $stmt->bindparam(":notes", $paddle_notes);
 
         try {
-            $stmt->execute();
+            if($stmt->execute()){
+                header("Location: profile.php");
+            }
+
         } catch (PDOException $e) {
             die($e->getMessage());
-
         }
-
         
         
         // $add_paddle_query = mysqli_query($connection, $query);

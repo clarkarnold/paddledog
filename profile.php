@@ -140,7 +140,7 @@ if(!isset($_SESSION['user_id'])){
 											if(empty($paddle_image)){
 												$paddle_image = "paddle_default.jpg";
 											}
-										}
+										
 	                                    
 										echo "<tr >";
 										echo "<td><a href='view_paddle.php?p_id={$paddle_id}' rel='tooltip' title='View Paddle'><img src='images/$paddle_image'' alt='' class='img-rounded img-raised' height='50px'></a></td>";
@@ -155,6 +155,7 @@ if(!isset($_SESSION['user_id'])){
 										<a rel='tooltip' title='Delete Paddle' href='profile.php?delete={$paddle_id}' class='btn btn-danger btn-simple btn-xs'><i class='fa fa-times'></i></a>
 										</td>";
 										echo "</tr>";
+									}
 								}
                                     
                                   ?> 
