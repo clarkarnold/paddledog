@@ -22,20 +22,44 @@
  
         $paddle_image = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
-        move_uploaded_file($paddle_image_temp, "images/$paddle_image");
+        // $allowed_filetypes = array('jpg', 'png');
+        // $file_ext = explode('.', $paddle_image);
+        // if( in_array(strtolower(end($file_ext)), $allowed_filetypes)){
+        //     move_uploaded_file($paddle_image_temp, "images/$paddle_image");
+        // }
+
         if(empty($paddle_image)){
             $paddle_image = 'paddle_default.jpg';
         }
         
         
         
-    $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) ";
-        $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}', '{$paddle_notes}') ";
+    // $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) ";
+    //     $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}', '{$paddle_notes}') ";
+
+// this stmt is not working.. datetime is probably an issue.
+        
+        $stmt = $conn->prepare("INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) VALUES(:date, :distance, :duration, :location, :user, :image, :notes)");
+        $stmt->bindparam(":date", STR_TO_DATE('$paddle_date', '%m/%d/%Y'));
+        $stmt->bindparam(":distance", $paddle_distance);
+        $stmt->bindparam(":duration", $paddle_duration);
+        $stmt->bindparam(":location", $paddle_location);
+        $stmt->bindparam(":user", $paddle_user);
+        $stmt->bindparam(":image", $paddle_image);
+        $stmt->bindparam(":notes", $paddle_notes);
+
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            die($e->getMessage());
+
+        }
+
         
         
-        $add_paddle_query = mysqli_query($connection, $query);
-        confirm($add_paddle_query);
-        header("Location: profile.php");
+        // $add_paddle_query = mysqli_query($connection, $query);
+        // confirm($add_paddle_query);
+        // header("Location: profile.php");
         
     }
     
@@ -98,7 +122,7 @@
                                 <div class="col-md-6">
                                         <div class="">
                                             <label for="paddle_image">Paddle Image</label>
-                                            <input type="file" name="image">
+                                            <input type="file" name="image" accept="image/jpg, image/png">
                                         </div>
                                 </div>
                             </div>

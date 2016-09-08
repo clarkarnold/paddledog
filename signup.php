@@ -43,9 +43,11 @@ if(isset($_SESSION['user_id'])){
            $emailError = "Please enter valid email address.";
         } else {
            // check email exist or not
-           $query = "SELECT user_email FROM users WHERE user_email='$user_email'";
-           $result = mysqli_query($query);
-           $count = mysqli_num_rows($result);
+           
+           $query = $conn->prepare("SELECT user_email FROM users WHERE user_email = :email");
+           $query->bindparam(":email", $user_email);
+           $query->execute();
+           $count = $query->rowCount();
            if($count!=0){
             $error = true;
             $emailError = "Provided Email is already in use.";
@@ -66,21 +68,25 @@ if(isset($_SESSION['user_id'])){
 
        if(!$error){
 
-       $query = "INSERT INTO users(user_name, user_email, user_password, user_image) ";
+       $stmt = $conn->prepare("INSERT INTO users(user_name, user_email, user_password, user_image) 
+                        VALUES(:name, :email, :password, 'user_default.png')");
+       $stmt->bindparam(":name", $user_name);
+       $stmt->bindparam(":email", $user_email);
+       $stmt->bindparam(":password", $hashed_password);
 
-       $query .= "VALUES('{$user_name}', '{$user_email}', '{$hashed_password}', 'user_default.png')";
-
-       $create_user_query = mysqli_query($connection, $query);
-       confirm($create_user_query);
-        if($create_user_query){
-            $query = "SELECT user_id FROM users WHERE user_email = '{$user_email}'";
-            $get_user_id = mysqli_query($connection, $query);
-            confirm($get_user_id);
-            $user_id_array = mysqli_fetch_assoc($get_user_id);
-            $user_id = $user_id_array['user_id'];
-            $_SESSION['user_id'] = $user_id;
-            header("Location: profile.php");
+       if($stmt->execute()){
+        $stmt = $conn->prepare("SELECT user_id FROM users WHERE user_email = :email");
+        $stmt->bindparam(":email", $user_email);
+        if($stmt->execute()){
+          while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $user_id = $row['user_id'];
+          }
+          $_SESSION['user_id'] = $user_id;
+          header("Location: profile.php");
         }
+
+       }
+
        
        }
    }
