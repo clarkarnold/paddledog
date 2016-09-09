@@ -71,7 +71,7 @@
     
     ?>
 <div class="wrapper">
-    <div class="header " style="background-image: url('https://hd.unsplash.com/photo-1466840787022-48e0ec048c8a');">
+    <div class="header " style="background-image: url('images/guyanddog.jpg');">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
