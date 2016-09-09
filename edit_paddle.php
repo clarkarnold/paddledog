@@ -12,19 +12,36 @@
         $user_id = $_SESSION['user_id'];
         
         
-        $query = "SELECT * FROM paddles WHERE paddle_id = {$paddle_id} AND paddle_user = {$user_id}";
-        $get_paddle = mysqli_query($connection, $query);
-        confirm($get_paddle);
-        
-        while($row = mysqli_fetch_assoc($get_paddle)){
-            $paddle_date = date("m/d/Y", strtotime($row['paddle_date']));
-            
-            $paddle_location = $row['paddle_location'];
-            $paddle_distance = $row['paddle_distance'];
-            $paddle_duration = $row['paddle_duration'];
-            $paddle_notes    = $row['paddle_notes'];
-            $paddle_image    = $row['paddle_image'];
+        $sql = "SELECT * FROM paddles WHERE paddle_id = $paddle_id AND paddle_user = $user_id";
+        $stmt = $conn->prepare($sql);
+
+        if($stmt->execute()){
+
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $paddle_date = date("m/d/Y", strtotime($row['paddle_date']));
+                
+                $paddle_location = $row['paddle_location'];
+                $paddle_distance = $row['paddle_distance'];
+                $paddle_duration = $row['paddle_duration'];
+                $paddle_notes    = $row['paddle_notes'];
+                $paddle_image    = $row['paddle_image'];
+            }
         }
+
+
+        // $query = "SELECT * FROM paddles WHERE paddle_id = {$paddle_id} AND paddle_user = {$user_id}";
+        // $get_paddle = mysqli_query($connection, $query);
+        // confirm($get_paddle);
+        
+        // while($row = mysqli_fetch_assoc($get_paddle)){
+        //     $paddle_date = date("m/d/Y", strtotime($row['paddle_date']));
+            
+        //     $paddle_location = $row['paddle_location'];
+        //     $paddle_distance = $row['paddle_distance'];
+        //     $paddle_duration = $row['paddle_duration'];
+        //     $paddle_notes    = $row['paddle_notes'];
+        //     $paddle_image    = $row['paddle_image'];
+        // }
     }
     
     
@@ -38,18 +55,56 @@
         
         $paddle_image_edit    = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
+
+        $allowed_filetypes = array('jpg', 'png');
+        $image_ext = explode(".", $paddle_image_edit);
+        if( in_array(strtolower(end($image_ext)), $allowed_filetypes)){
+            move_uploaded_file($paddle_image_temp, "images/$paddle_image_edit");
+        } else {
+            $paddle_image_edit = $padde_image;
+        }
         
         if(empty($paddle_image_temp)){
             $paddle_image_edit = $paddle_image;
         }
         
-        move_uploaded_file($paddle_image_temp, "images/$paddle_image_edit");
+
         
-        $query = "UPDATE paddles SET paddle_date = STR_TO_DATE('$paddle_date', '%m/%d/%Y'), paddle_location = '{$paddle_location}', ";
-        $query .= "paddle_distance = {$paddle_distance}, paddle_duration = {$paddle_duration}, paddle_image = '{$paddle_image_edit}', paddle_notes = '{$paddle_notes}' WHERE paddle_id = {$paddle_id}";
+
+        $sql = "UPDATE paddles 
+                SET paddle_date = STR_TO_DATE('$paddle_date','%m/%d/%Y'), 
+                    paddle_location = :location, 
+                    paddle_distance = :distance, 
+                    paddle_duration = :duration, 
+                    paddle_notes = :notes, 
+                    paddle_image = :image 
+                WHERE paddle_id = '{$paddle_id}'";
+
+        $stmt = $conn->prepare($sql);
+
+
+        $stmt->bindparam(":location", $paddle_location);
+        $stmt->bindparam(":distance", $paddle_distance);
+        $stmt->bindparam(":duration", $paddle_duration);
+        $stmt->bindparam(":notes", $paddle_notes);
+        $stmt->bindparam(":image", $paddle_image_edit);
+
+        try {
+            if($stmt->execute()){
+                header("Location: profile.php");
+            }
+
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
         
-        $edit_paddle_query = mysqli_query($connection, $query);
-        confirm($edit_paddle_query);
+
+
+        // $query = "UPDATE paddles SET paddle_date = STR_TO_DATE('$paddle_date', '%m/%d/%Y'), paddle_location = '{$paddle_location}', ";
+        // $query .= "paddle_distance = {$paddle_distance}, paddle_duration = {$paddle_duration}, paddle_image = '{$paddle_image_edit}', paddle_notes = '{$paddle_notes}' WHERE paddle_id = {$paddle_id}";
+        
+        // $edit_paddle_query = mysqli_query($connection, $query);
+        // confirm($edit_paddle_query);
         
     }
     ?>
@@ -106,12 +161,12 @@
                             <div class="row">
                             <div class="col-md-6">
                                   
-                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="" value="<?php echo $paddle_notes; ?>"></textarea>
+                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="" value="<?php echo $paddle_notes; ?>"><?php echo $paddle_notes; ?></textarea>
                                </div>
                             <div class="col-md-6">
                                 <div class="">
                                    <label for="">Image</label>
-                                    <input type="file" name="image" value="images/<?php echo $paddle_image; ?>">
+                                    <input type="file" name="image" accept="image/jpg, image/png" value="images/<?php echo $paddle_image; ?>">
                                 </div>
                             </div>
                             </div>

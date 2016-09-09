@@ -1,4 +1,12 @@
-<?php include "includes/db.php"; ?>
+<?php 
+
+require "includes/db.php"; 
+require "includes/QueryBuilder.php";
+$pdo = new QueryBuilder($conn);
+
+
+
+?>
 <?php include "includes/functions.php"; ?>
 <?php 
 ob_start();

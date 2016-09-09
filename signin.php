@@ -38,21 +38,33 @@ $emailError=""; $passError=""; $errMsg = "";
            $passError = "Please enter your password";
        }
 
-       // encrypt password
+       // hash password
        
 
        if(!$error){
            
            
-           $query = "SELECT * FROM users WHERE user_email = '{$user_email}'";
-           
-           $get_user_query = mysqli_query($connection,$query);
-           while($row=mysqli_fetch_assoc($get_user_query)){
-               $db_name = $row['user_name'];
-               $db_password = $row['user_password'];
-               $db_id = $row['user_id'];
-               $db_email = $row['user_email'];
+           // $query = "SELECT * FROM users WHERE user_email = '{$user_email}'";
+           $stmt = $conn->prepare("SELECT * FROM users WHERE user_email = :email");
+           $stmt->bindparam(":email", $user_email);
+           if($stmt->execute()){
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+              $db_id = $row['user_id'];
+              $db_password = $row['user_password'];
+              $db_name = $row['user_name'];
+              $db_email = $row['user_email'];
+            }
            }
+
+
+           
+           // $get_user_query = mysqli_query($connection,$query);
+           // while($row=mysqli_fetch_assoc($get_user_query)){
+           //     $db_name = $row['user_name'];
+           //     $db_password = $row['user_password'];
+           //     $db_id = $row['user_id'];
+           //     $db_email = $row['user_email'];
+           // }
 
            
            

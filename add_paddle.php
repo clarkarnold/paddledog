@@ -22,20 +22,49 @@
  
         $paddle_image = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
-        move_uploaded_file($paddle_image_temp, "images/$paddle_image");
+
+        $allowed_filetypes = array('jpg', 'png');
+        $file_ext = explode('.', $paddle_image);
+        if( in_array(strtolower(end($file_ext)), $allowed_filetypes)){
+            move_uploaded_file($paddle_image_temp, "images/$paddle_image");
+        } else {
+            $paddle_image = "paddle_default.jpg";
+        }
+
         if(empty($paddle_image)){
             $paddle_image = 'paddle_default.jpg';
         }
+
+
+
+
+        $sql = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) VALUES(STR_TO_DATE('$paddle_date','%m/%d/%Y'), :distance, :duration, :location, :user, :image, :notes)";
+        $stmt = $conn->prepare($sql);
+        if(!$stmt){
+            echo "no stmt<br>";
+            print_r($conn->errorInfo());
+        }
+
+        $stmt->bindparam(":distance", $paddle_distance);
+        $stmt->bindparam(":duration", $paddle_duration);
+        $stmt->bindparam(":location", $paddle_location);
+        $stmt->bindparam(":user", $user_id);
+        $stmt->bindparam(":image", $paddle_image);
+        $stmt->bindparam(":notes", $paddle_notes);
+
+        try {
+            if($stmt->execute()){
+                header("Location: profile.php");
+            }
+
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
         
         
-        
-    $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) ";
-        $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}', '{$paddle_notes}') ";
-        
-        
-        $add_paddle_query = mysqli_query($connection, $query);
-        confirm($add_paddle_query);
-        header("Location: profile.php");
+        // $add_paddle_query = mysqli_query($connection, $query);
+        // confirm($add_paddle_query);
+        // header("Location: profile.php");
         
     }
     
@@ -98,7 +127,7 @@
                                 <div class="col-md-6">
                                         <div class="">
                                             <label for="paddle_image">Paddle Image</label>
-                                            <input type="file" name="image">
+                                            <input type="file" name="image" accept="image/jpg, image/png">
                                         </div>
                                 </div>
                             </div>

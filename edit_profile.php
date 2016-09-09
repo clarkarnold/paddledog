@@ -7,17 +7,29 @@ if(!isset($_SESSION['user_id'])){
 
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT * FROM users WHERE user_id = {$user_id}";
-    $user_data = mysqli_query($connection, $query);
-    confirm($user_data);
-    
-    while($row=mysqli_fetch_assoc($user_data)){
 
-        $user_name = $row['user_name'];
-        $user_email = $row['user_email'];
-        $user_password = $row['user_password'];
-        $user_image = $row['user_image'];
+    $sql = "SELECT * FROM users WHERE user_id = $user_id";
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()){
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $user_name = $row['user_name'];
+            $user_email = $row['user_email'];
+            $user_password = $row['user_password'];
+            $user_image = $row['user_image'];
+        }
     }
+
+    // $query = "SELECT * FROM users WHERE user_id = {$user_id}";
+    // $user_data = mysqli_query($connection, $query);
+    // confirm($user_data);
+    
+    // while($row=mysqli_fetch_assoc($user_data)){
+
+    //     $user_name = $row['user_name'];
+    //     $user_email = $row['user_email'];
+    //     $user_password = $row['user_password'];
+    //     $user_image = $row['user_image'];
+    // }
     
 }
 
@@ -44,24 +56,41 @@ if(isset($_POST['edit_user'])){
     $user_image_edit = $_FILES['user_image']['name'];
     $user_file_type  = $_FILES['user_image']['type'];
     $user_image_temp = $_FILES['user_image']['tmp_name'];
-    $image_error = "";
-    
-    $allowed_filetypes = ["image/jpeg", "image/gif", "image/png"];
     if(empty($user_image_temp)){
         $user_image_edit = $user_image;
-    } else if(!in_array($user_file_type, $allowed_filetypes)) {
-        $image_error = "Only Images Allowed";
-    } else {
-        move_uploaded_file($user_image_temp, "images/$user_image_edit");
     }
+
+    $allowed_filetypes = array("jpg, png");
+    $image_ext = explode(".", $user_image_edit);
+        if( in_array(strtolower(end($image_ext)), $allowed_filetypes)){
+            move_uploaded_file($user_image_temp, "images/$user_image_edit");
+        } else {
+            $image_error = "Only images allowed.";
+        }
     
-    $query = "UPDATE users SET user_name = '{$user_name}', user_email = '{$user_email}', user_password = '{$user_password}', ";
-    $query .= "user_image = '{$user_image_edit}' WHERE user_id = {$user_id}";
+
+    $sql = "UPDATE users SET 
+                user_name = :user, 
+                user_email = :email, 
+                user_password = :password, 
+                user_image = '{$user_image_edit}' 
+                WHERE user_id = $user_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindparam(":user", $user_name);
+    $stmt->bindparam(":email", $user_email);
+    $stmt->bindparam(":password", $user_password);
+    if($stmt->execute()){
+        header("Location: profile.php");
+    }
+
+
+    // $query = "UPDATE users SET user_name = '{$user_name}', user_email = '{$user_email}', user_password = '{$user_password}', ";
+    // $query .= "user_image = '{$user_image_edit}' WHERE user_id = {$user_id}";
     
-    $update_profile_query = mysqli_query($connection, $query);
-    confirm($update_profile_query);
+    // $update_profile_query = mysqli_query($connection, $query);
+    // confirm($update_profile_query);
     
-    header("Location: profile.php");
+    // header("Location: profile.php");
 }
 
 
@@ -124,10 +153,7 @@ if(isset($_POST['edit_user'])){
                                    <label for="user_image">Change Image</label>
                                     <input class="" type="file" name="user_image" value="<?php echo $user_image ?>">
                                     <?php
-                                        if($image_error){
-                                            echo "Error: " . $image_error;
-                                        }
-    
+                                        
                                         ?>    
                                 </div>
                                 <div class="row"></div>
