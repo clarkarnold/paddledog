@@ -55,12 +55,19 @@
         
         $paddle_image_edit    = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
+
+        $allowed_filetypes = array('jpg', 'png');
+        $image_ext = explode(".", $paddle_image_edit);
+        if( in_array(strtolower(end($image_ext)), $allowed_filetypes)){
+            move_uploaded_file($paddle_image_temp, "images/$paddle_image_edit");
+        } else {
+            $paddle_image_edit = $padde_image;
+        }
         
         if(empty($paddle_image_temp)){
             $paddle_image_edit = $paddle_image;
         }
         
-        move_uploaded_file($paddle_image_temp, "images/$paddle_image_edit");
 
         
 
@@ -70,7 +77,7 @@
                     paddle_distance = :distance, 
                     paddle_duration = :duration, 
                     paddle_notes = :notes, 
-                    paddle_image = :image, 
+                    paddle_image = :image 
                 WHERE paddle_id = '{$paddle_id}'";
 
         $stmt = $conn->prepare($sql);
@@ -154,12 +161,12 @@
                             <div class="row">
                             <div class="col-md-6">
                                   
-                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="" value="<?php echo $paddle_notes; ?>"></textarea>
+                                   <textarea name="paddle_notes" id="" cols="30" rows="2" class="form-control" placeholder="" value="<?php echo $paddle_notes; ?>"><?php echo $paddle_notes; ?></textarea>
                                </div>
                             <div class="col-md-6">
                                 <div class="">
                                    <label for="">Image</label>
-                                    <input type="file" name="image" value="images/<?php echo $paddle_image; ?>">
+                                    <input type="file" name="image" accept="image/jpg, image/png" value="images/<?php echo $paddle_image; ?>">
                                 </div>
                             </div>
                             </div>

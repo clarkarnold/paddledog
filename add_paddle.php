@@ -22,22 +22,20 @@
  
         $paddle_image = $_FILES['image']['name'];
         $paddle_image_temp = $_FILES['image']['tmp_name'];
-        // $allowed_filetypes = array('jpg', 'png');
-        // $file_ext = explode('.', $paddle_image);
-        // if( in_array(strtolower(end($file_ext)), $allowed_filetypes)){
-        //     move_uploaded_file($paddle_image_temp, "images/$paddle_image");
-        // }
+
+        $allowed_filetypes = array('jpg', 'png');
+        $file_ext = explode('.', $paddle_image);
+        if( in_array(strtolower(end($file_ext)), $allowed_filetypes)){
+            move_uploaded_file($paddle_image_temp, "images/$paddle_image");
+        } else {
+            $paddle_image = "paddle_default.jpg";
+        }
 
         if(empty($paddle_image)){
             $paddle_image = 'paddle_default.jpg';
         }
-        
-        
-        
-    // $query = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) ";
-    //     $query .= "VALUES(STR_TO_DATE('$paddle_date', '%m/%d/%Y'), '{$paddle_distance}', '{$paddle_duration}', '{$paddle_location}', '{$user_id}', '{$paddle_image}', '{$paddle_notes}') ";
 
-// this stmt is not working.. datetime is probably an issue.
+
 
 
         $sql = "INSERT INTO paddles(paddle_date, paddle_distance, paddle_duration, paddle_location, paddle_user, paddle_image, paddle_notes) VALUES(STR_TO_DATE('$paddle_date','%m/%d/%Y'), :distance, :duration, :location, :user, :image, :notes)";
@@ -46,7 +44,7 @@
             echo "no stmt<br>";
             print_r($conn->errorInfo());
         }
-        // $stmt->bindparam(":date", $paddle_date);
+
         $stmt->bindparam(":distance", $paddle_distance);
         $stmt->bindparam(":duration", $paddle_duration);
         $stmt->bindparam(":location", $paddle_location);

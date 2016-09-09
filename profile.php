@@ -177,10 +177,15 @@ if(!isset($_SESSION['user_id'])){
 <?php
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
-    $query = "DELETE FROM paddles WHERE paddle_id = {$id} AND paddle_user = $user_id";
-    $delete_paddle = mysqli_query($connection,$query);
-    confirm($delete_paddle);
-    header("Location: profile.php");
+    $sql = "DELETE FROM paddles WHERE paddle_id = $id AND paddle_user = $user_id";
+    $stmt = $conn->prepare($sql);
+    try {
+    	$stmt->execute();
+    	header("Location: profile.php");
+    } catch (PDOException $e) {
+	die($e->getMessage());
+	}
+
 }
 
 ?>

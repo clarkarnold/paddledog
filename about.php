@@ -21,8 +21,11 @@
 	                           I wanted a more tailored logger for my records. I decided to code this up for 
 	                           fun as well as to learn. It is all open source and you can find the code on 
 	                           <a href="https://github.com/clarkarnold/paddledog" target="_blank">Github</a>.</p>
+	                           <div style="height: 50px;"></div>
 	                           </div>
+	                           
 	                        </div>
+
 	                    </div>
 	                </div>
 
@@ -34,8 +37,5 @@
 	        </div>
 		</div>
 
-<script>
-  
-</script>
 
 <?php include "includes/footer.php"; ?>
